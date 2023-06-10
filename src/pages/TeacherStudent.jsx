@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import styled from 'styled-components';
-import TitleText from "../components/TitleText";
+import TitleText from "../components/TitleImage";
 import RegisterForms from "../components/RegisterForms";
 
 export default function TeacherStudent() {

@@ -1,19 +1,19 @@
 import styled from 'styled-components';
 
-export default function TitleText() {
+export default function TitleImage() {
     return (
-        <>
-            <Text>Ciencia Compartilhada</Text>
-        </>
+        <Image>
+            <img src="https://github.com/CienciaCompartilhada/assets/blob/main/logo.png?raw=true"/>
+        </Image>
     );
 }
 
-const Text = styled.p`
+const Image = styled.div`
     display:flex;
     justify-content:center;
     align-items:center;
     width:100%;
-    height:50px;
+    height:100px;
     font-family:'Saira Stencil One',sans-serif;
     color:#ffffff;
     font-size: 32px;

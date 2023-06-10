@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from 'styled-components';
-import TitleText from "../components/TitleText";
+import TitleText from "../components/TitleImage";
 import LoginForms from "../components/LoginForms";
 
 export default function Login() {
