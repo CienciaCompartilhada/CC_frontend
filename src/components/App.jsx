@@ -5,6 +5,7 @@ import Login from '../pages/Login';
 import Register from '../pages/Register';
 import { AuthProvider } from '../providers/auth';
 import TeacherStudent from '../pages/TeacherStudent';
+import Home from '../pages/Home';
 
 export default function App() {
   return (
@@ -16,7 +17,7 @@ export default function App() {
             <Route path="/" element={<Login />} />
             <Route path="/teacher-student" element={<TeacherStudent />} />
             <Route path="/sign-up/:isTeacher" element={<Register/>}/>
-            <Route path="home" element={<>oi</>}/>
+            <Route path="home" element={<Home/>}/>
           </Routes>
         </BrowserRouter>
       </AuthProvider>
