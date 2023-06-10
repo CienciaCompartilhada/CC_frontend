@@ -4,7 +4,9 @@ import HomeOptions from "./MenuOptions";
 export default function Menu(){
     return(
     <MenuDiv>
-        <MenuLogo src="https://github.com/CienciaCompartilhada/assets/blob/main/logo.png?raw=true"/>
+        <MenuLogoContainer>
+            <MenuLogo src="https://github.com/CienciaCompartilhada/assets/blob/main/logo.png?raw=true"/>
+        </MenuLogoContainer>
         <HomeOptions/>
         <LogoutButton/>
     </MenuDiv>
@@ -22,8 +24,21 @@ const MenuDiv = styled.div`
     justify-content: space-around;
 `;
 
-const MenuLogo = styled.img`
+const MenuLogoContainer = styled.div`
   height: 100%;
-  border-radius: 50%;
-  object-fit: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+const MenuLogo = styled.img`
+    height: 100%;
+    cursor: pointer;
+    border-radius: 50%;
+    object-fit: cover;
+    transition: box-shadow 0.3s ease-in-out;
+
+    &:hover {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
 `;
