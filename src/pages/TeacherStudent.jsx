@@ -1,10 +1,20 @@
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 import TitleText from "../components/TitleImage";
 import RegisterForms from "../components/RegisterForms";
+import { AuthContext } from "../providers/auth";
 
 export default function TeacherStudent() {
     const navigate = useNavigate();
+    const { setToken } = React.useContext(AuthContext);
+    useEffect(() => {
+        const localToken = localStorage.getItem("tokenCienciaCompartilhada");
+        if (localToken) {
+            setToken(localToken);
+            navigate("/home");
+        }
+    }, []);
     return (
         <TeacherStudentDiv>
             <TitleText />
