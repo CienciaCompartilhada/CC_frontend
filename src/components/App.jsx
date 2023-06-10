@@ -16,6 +16,7 @@ export default function App() {
             <Route path="/" element={<Login />} />
             <Route path="/teacher-student" element={<TeacherStudent />} />
             <Route path="/sign-up/:isTeacher" element={<Register/>}/>
+            <Route path="home" element={<>oi</>}/>
           </Routes>
         </BrowserRouter>
       </AuthProvider>
