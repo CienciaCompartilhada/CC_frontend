@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
 import Loading from "./Loading";
 
@@ -9,9 +9,9 @@ export default function RegisterForms() {
         email: '',
         password: '',
         name: '',
-        passwordConfirm: '',
-        universityName: ''
+        passwordConfirm: ''
     })
+    const { isTeacher } = useParams();
     const navigate = useNavigate()
     const [submited, setSubmited] = React.useState(false)
 
@@ -19,6 +19,7 @@ export default function RegisterForms() {
         setForm({ ...form, [e.target.name]: e.target.value })
     }
     function failedRegister(e){
+        console.log(e);
         alert(e.response.data)
         setSubmited(false)
     }
@@ -28,13 +29,25 @@ export default function RegisterForms() {
         if(form.password !== form.passwordConfirm){
             return alert("senhas diferentes")
         }
-        const loginPost = axios.post(`${process.env.REACT_APP_API_URL}sign-up`, {
-			email: form.email,
-            name: form.name,
-            password: form.password
-		})
-		loginPost.then(() => navigate("/"))
-        loginPost.catch((e) => failedRegister(e))
+        if(isTeacher === "false" || isTeacher === "true"){
+            const body = {
+                name: form.name,
+                email: form.email,
+                password: form.password,
+                is_teacher: (isTeacher === "true")
+            };
+            console.log(body);
+            console.log(process.env.REACT_APP_API_URL);
+            const loginPost = axios.post(`${process.env.REACT_APP_API_URL}users/`, body)
+            loginPost.then(() => {
+                alert("Registro finalizado, faça login para acessar sua conta!")
+                navigate("/")
+            })
+            loginPost.catch((e) => failedRegister(e))
+        } else {
+            alert("houve um problema com sua url, tente novamente");
+            navigate("/")
+        }
     }
     return (
         <RegisterFormDiv>
@@ -74,15 +87,6 @@ export default function RegisterForms() {
                     placeholder="Confirme sua senha"
                     onChange={handleForm}
                     value={form.passwordConfirm}
-                />
-                <input
-                    disabled={false}
-                    name="universityName"
-                    type="text"
-                    required
-                    placeholder="Nome da Universidade"
-                    onChange={handleForm}
-                    value={form.universityName}
                 />
                 <button
                     disabled={false}

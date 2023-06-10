@@ -1,14 +1,13 @@
-import { Link, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styled from 'styled-components';
-import TitleText from "../components/TitleText";
+import TitleText from "../components/TitleImage";
 import RegisterForms from "../components/RegisterForms";
 
 export default function Register() {
-    const { isTeacher } = useParams();
     return (
         <RegisterDiv>
             <TitleText />
-            <RegisterForms isTeacher={isTeacher}/>
+            <RegisterForms />
             <StyledLink to="/">
                 <p>
                     Já tem uma conta? Entre agora!
