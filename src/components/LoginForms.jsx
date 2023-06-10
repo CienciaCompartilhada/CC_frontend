@@ -31,7 +31,7 @@ export default function LoginForms() {
     function doLogin(e) {
         setSubmited(true)
         e.preventDefault();
-        const postLogin = axios.post(`${process.env.REACT_APP_API_URL}sign-in`, {
+        const postLogin = axios.post(`${process.env.REACT_APP_API_URL}auth/sign-in`, {
             email: form.email,
             password: form.password
         })
@@ -71,14 +71,15 @@ export default function LoginForms() {
 
 const LoginFormDiv = styled.div`
     width:100%;
-    max-width: 550px;
+    max-width: 400px;
     form{
         display:flex;
         flex-direction: column;
         margin-top:24px;
         width:100%;
         input{
-            height:58px;
+            height:100%;
+            max-height: 40px;
             width:100%;
             border:none;
             border-radius:5px;
