@@ -13,6 +13,9 @@ export default function HomeOptions(){
             <OptionButton>
                 pesquisas
             </OptionButton>
+            <OptionButton>
+                Minhas Preferências
+            </OptionButton>
         </OptionsDiv>
     );
 }
