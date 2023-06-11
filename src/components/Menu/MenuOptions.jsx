@@ -1,19 +1,19 @@
 import React from 'react';
 import styled from "styled-components";
 
-export default function HomeOptions(){
+export default function HomeOptions(props){
     return(
         <OptionsDiv>
-            <OptionButton>
+            <OptionButton chosen={props.chosen==='professores'} onClick={() => props.setChosen('professores')}>
                 professores
             </OptionButton>
-            <OptionButton>
+            <OptionButton chosen={props.chosen==='alunos'} onClick={() => props.setChosen('alunos')}>
                 alunos
             </OptionButton>
-            <OptionButton>
+            <OptionButton chosen={props.chosen==='pesquisas'} onClick={() => props.setChosen('pesquisas')}>
                 pesquisas
             </OptionButton>
-            <OptionButton>
+            <OptionButton chosen={props.chosen==='Minhas Preferências'} onClick={() => props.setChosen('Minhas Preferências')}>
                 Minhas Preferências
             </OptionButton>
         </OptionsDiv>
@@ -33,7 +33,7 @@ const OptionButton = styled.button`
     width: 100px;
     height: 100%;
     border-radius: 20px;
-    background: none;
+    background: ${props => (props.chosen ? '#509e88' : 'none')};
     border: none;
     font-size: 16px;
     color: #fff;

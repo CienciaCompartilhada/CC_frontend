@@ -1,13 +1,23 @@
 import styled from 'styled-components';
 import Menu from '../components/Menu/Menu';
 import ResearchFeed from '../components/Home/ResearchFeed';
+import { useState } from 'react';
+import TeacherFeed from '../components/Home/TeacherFeed';
+import StudentFeed from '../components/Home/StudentFeed';
 
 export default function Home() {
+    const [chosen, setChosen] = useState("pesquisas")
     return(
         <HomeDiv>
-        <Menu/>
+        <Menu setChosen={setChosen} chosen={chosen}/>
         <HomeFeed>
-            <ResearchFeed/>
+            {
+                chosen === 'pesquisas' ? <ResearchFeed/> : (
+                    chosen === 'professores' ? <TeacherFeed/> : (
+                        chosen === 'alunos' ? <StudentFeed/> : <>MINHAS PREFERENCIAS</>
+                    )
+                )
+            }
         </HomeFeed>
         </HomeDiv>
     );
