@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { AuthContext } from "../../providers/auth";
 
 export default function TeacherFeed(){
-    const [projects, setProjects] = useState([]);
+    const [teachers, setTeachers] = useState([]);
     const { token } = React.useContext(AuthContext);
     const localToken = localStorage.getItem("tokenCienciaCompartilhada");
 
@@ -16,25 +16,21 @@ export default function TeacherFeed(){
                 "Authorization": `Bearer ${token ? token : localToken}`
             }
         }
-        const getProjects = axios.get(`${process.env.REACT_APP_API_URL}projects`, config)
-        getProjects.then(ans => {
-            setProjects(ans.data)
+        const getTeachers = axios.get(`${process.env.REACT_APP_API_URL}users/teachers`, config)
+        getTeachers.then(ans => {
+            setTeachers(ans.data)
         })
     }, []);
     return(
         <Feed>
-            {projects.length === 0 ? <p>Não existem projetos de pesquisa cadastrados</p> : projects.map(i =>
-                <Post>
-                    <PostTitle>
+            {teachers.length === 0 ? <p>Não existem professores cadastrados</p> : teachers.map(i =>
+                <Teacher>
+                    <TeacherInfo>
                         <h1>{i.name}</h1>
-                        <h2>Professor: {i.professor}</h2>
                         <h2>Universidade: {i.university}</h2>
                         <h2>Especialidade: {i.expertise}</h2>
-                    </PostTitle>
-                    <PostInfo>
-                        <p>{i.description}</p>
-                    </PostInfo>
-                </Post>
+                    </TeacherInfo>
+                </Teacher>
             )}
         </Feed>
     );
@@ -49,12 +45,13 @@ const Feed = styled.div`
     overflow: auto;
 `;
 
-const Post = styled.div`
+const Teacher = styled.div`
     width: 80%;
     background: linear-gradient(to bottom, #82b6fa, #8DD4E0);
     border-radius: 10px;
     height: 100%;
-    max-height: 500px;
+    min-height: 140px;
+    max-height: 150px;
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
@@ -70,7 +67,7 @@ const Post = styled.div`
 `;
 
 
-const PostTitle = styled.div`
+const TeacherInfo = styled.div`
     width:100%;
     height: 70%;
     display: flex;
@@ -84,12 +81,4 @@ const PostTitle = styled.div`
         margin-top: 10px;
         font-weight: 500;
     }
-`;
-
-const PostInfo = styled.div`
-    margin-top: 30px;
-    height: 100%;
-    max-height: 300px;
-    margin-bottom: 20px;
-    overflow: auto;
 `;
