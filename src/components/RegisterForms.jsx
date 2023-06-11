@@ -19,8 +19,7 @@ export default function RegisterForms() {
         setForm({ ...form, [e.target.name]: e.target.value })
     }
     function failedRegister(e){
-        console.log(e);
-        alert(e.response.data)
+        alert(e.response.data.details);
         setSubmited(false)
     }
     function doRegister(e) {

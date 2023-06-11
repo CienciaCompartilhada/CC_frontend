@@ -19,7 +19,7 @@ export default function LoginForms() {
     }
 
     function failedLogin(e) {
-        alert(e.response.data)
+        if(e.response.statusText === "Unauthorized") alert("email ou senha invalidos")
         setSubmited(false)
     }
 
