@@ -24,7 +24,7 @@ export default function LoginForms() {
     }
 
     function didLogin(a) {
-        setToken(a.data)
+        setToken(a.data.token)
         localStorage.setItem("tokenCienciaCompartilhada", a.data.token);
         navigate("/home")
     }
