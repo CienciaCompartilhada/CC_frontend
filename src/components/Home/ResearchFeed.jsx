@@ -1,64 +1,41 @@
+import React from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { AuthContext } from "../../providers/auth";
 
 export default function ResearchFeed(){
+    const [projects, setProjects] = useState([]);
+    const { token } = React.useContext(AuthContext);
+    const localToken = localStorage.getItem("tokenCienciaCompartilhada");
+
+    useEffect(()=>{
+        
+        const config = {
+            headers: {
+                "Authorization": `Bearer ${token ? token : localToken}`
+            }
+        }
+        const getProjects = axios.get(`${process.env.REACT_APP_API_URL}projects`, config)
+        getProjects.then(ans => {
+            setProjects(ans.data)
+        })
+    }, []);
     return(
         <Feed>
-            <Post>
-                <PostTitle>
-                    <h1>Análise do Impacto do Ipsum Lorem no Avanço de Estudo Teste </h1>
-                    <h2>Professor: Professor Teste Exemplo</h2>
-                </PostTitle>
-                <PostInfo>
-                    <p>
-                        Esta é uma breve descrição desta pesquisa cientifica voltada para
-                        o teste de uma funcionalidade do site e pensada de forma a ser totalmente
-                        aleatória e ficticia. Caso queiram participar ficciosamente desta pesquisa
-                        inventada entrem em contato pelo email inexistente teste@gmail.com
-                    </p>
-                </PostInfo>
-            </Post>
-            <Post>
-                <PostTitle>
-                    <h1>Análise do Impacto do Ipsum Lorem no Avanço de Estudo Teste </h1>
-                    <h2>Professor: Professor Teste Exemplo</h2>
-                </PostTitle>
-                <PostInfo>
-                    <p>
-                        Esta é uma breve descrição desta pesquisa cientifica voltada para
-                        o teste de uma funcionalidade do site e pensada de forma a ser totalmente
-                        aleatória e ficticia. Caso queiram participar ficciosamente desta pesquisa
-                        inventada entrem em contato pelo email inexistente teste@gmail.com
-                    </p>
-                </PostInfo>
-            </Post>
-            <Post>
-                <PostTitle>
-                    <h1>Análise do Impacto do Ipsum Lorem no Avanço de Estudo Teste </h1>
-                    <h2>Professor: Professor Teste Exemplo</h2>
-                </PostTitle>
-                <PostInfo>
-                    <p>
-                        Esta é uma breve descrição desta pesquisa cientifica voltada para
-                        o teste de uma funcionalidade do site e pensada de forma a ser totalmente
-                        aleatória e ficticia. Caso queiram participar ficciosamente desta pesquisa
-                        inventada entrem em contato pelo email inexistente teste@gmail.com
-                    </p>
-                </PostInfo>
-            </Post>
-            <Post>
-                <PostTitle>
-                    <h1>Análise do Impacto do Ipsum Lorem no Avanço de Estudo Teste </h1>
-                    <h2>Professor: Professor Teste Exemplo</h2>
-                </PostTitle>
-                <PostInfo>
-                    <p>
-                        Esta é uma breve descrição desta pesquisa cientifica voltada para
-                        o teste de uma funcionalidade do site e pensada de forma a ser totalmente
-                        aleatória e ficticia. Caso queiram participar ficciosamente desta pesquisa
-                        inventada entrem em contato pelo email inexistente teste@gmail.com
-                    </p>
-                </PostInfo>
-            </Post>
+            {projects.length === 0 ? <p>Não existem projetos de pesquisa cadastrados</p> : projects.map(i =>
+                <Post>
+                    <PostTitle>
+                        <h1>{i.name}</h1>
+                        <h2>Professor: {i.professor}</h2>
+                        <h2>Universidade: {i.university}</h2>
+                        <h2>Especialidade: {i.expertise}</h2>
+                    </PostTitle>
+                    <PostInfo>
+                        <p>{i.description}</p>
+                    </PostInfo>
+                </Post>
+            )}
         </Feed>
     );
 }
