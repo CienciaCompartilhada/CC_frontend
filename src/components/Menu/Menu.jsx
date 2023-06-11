@@ -1,10 +1,12 @@
 import styled from "styled-components";
 import LogoutButton from "./LogoutButton";
 import HomeOptions from "./MenuOptions";
+import { useNavigate } from "react-router-dom";
 export default function Menu(){
+    const navigate = useNavigate();
     return(
     <MenuDiv>
-        <MenuLogoContainer>
+        <MenuLogoContainer onClick={() => navigate("/home")}>
             <MenuLogo src="https://github.com/CienciaCompartilhada/assets/blob/main/logo.png?raw=true"/>
         </MenuLogoContainer>
         <HomeOptions/>
