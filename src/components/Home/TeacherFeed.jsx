@@ -28,7 +28,7 @@ export default function TeacherFeed(){
                     <TeacherInfo>
                         <h1>{i.name}</h1>
                         <h2>Universidade: {i.university}</h2>
-                        <h2>Especialidade: {i.expertise}</h2>
+                        <h2>Especialidade: {i.expertises.map(j => j.name).join(", ")}</h2>
                     </TeacherInfo>
                 </Teacher>
             )}
