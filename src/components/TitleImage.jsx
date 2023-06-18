@@ -13,7 +13,7 @@ const Image = styled.div`
     justify-content:center;
     align-items:center;
     width:100%;
-    height:100px;
+    height:70px;
     font-family:'Saira Stencil One',sans-serif;
     color:#ffffff;
     font-size: 32px;

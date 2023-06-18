@@ -1,19 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from "axios";
 import Loading from "./Loading";
+import { AuthContext } from "../providers/auth";
 
 export default function RegisterForms() {
     const [form, setForm] = React.useState({
         email: '',
         password: '',
         name: '',
-        passwordConfirm: ''
+        passwordConfirm: '',
+        university: ''
     })
+    const [universities, setUniversities] = React.useState([]);
     const { isTeacher } = useParams();
     const navigate = useNavigate()
     const [submited, setSubmited] = React.useState(false)
+    const { token } = React.useContext(AuthContext);
+    const localToken = localStorage.getItem("tokenCienciaCompartilhada");
+
+    useEffect(()=>{
+        const getUniversities = axios.get(`${process.env.REACT_APP_API_URL}universities`)
+        getUniversities.then(ans => {
+            setUniversities(ans.data)
+        })
+    }, []);
 
     function handleForm(e) {
         setForm({ ...form, [e.target.name]: e.target.value })
@@ -26,8 +38,9 @@ export default function RegisterForms() {
         setSubmited(true)
         e.preventDefault();
         if(form.password !== form.passwordConfirm){
-            return alert("senhas diferentes")
+            return alert("senhas diferentes");
         }
+        if(form.university === "") return alert("selecione sua universidade");
         if(isTeacher === "false" || isTeacher === "true"){
             const body = {
                 name: form.name,
@@ -37,12 +50,17 @@ export default function RegisterForms() {
             };
             console.log(body);
             console.log(process.env.REACT_APP_API_URL);
-            const loginPost = axios.post(`${process.env.REACT_APP_API_URL}users/`, body)
-            loginPost.then(() => {
-                alert("Registro finalizado, faça login para acessar sua conta!")
-                navigate("/")
+            const RegisterPost = axios.post(`${process.env.REACT_APP_API_URL}users/`, body)
+            RegisterPost.then((e) => {
+                const newBody = {user_id: e.data.id, universityId: parseInt(form.university)};
+                console.log(newBody)
+                const userUniPost = axios.post(`${process.env.REACT_APP_API_URL}users/university`, newBody)
+                userUniPost.then(() => {
+                    alert("REGISTRO FINALIZADO, AGORA EFETUE O LOGIN");
+                    navigate("/");
+                })
             })
-            loginPost.catch((e) => failedRegister(e))
+            RegisterPost.catch((e) => failedRegister(e))
         } else {
             alert("houve um problema com sua url, tente novamente");
             navigate("/")
@@ -87,8 +105,21 @@ export default function RegisterForms() {
                     onChange={handleForm}
                     value={form.passwordConfirm}
                 />
+                <select
+                    name="university"
+                    required
+                    onChange={handleForm}
+                    value={form.university}
+                >
+                    <option value="">Selecione sua universidade</option>
+                    {universities.map((university) => (
+                    <option key={university.id} value={university.id}>
+                        {university.name}
+                    </option>
+                    ))}
+                </select>
                 <button
-                    disabled={false}
+                    disabled={submited}
                     type="submit"
                 >{submited ? <Loading /> : "Cadastrar"}</button>
             </form>
@@ -117,6 +148,23 @@ const RegisterFormDiv = styled.div`
                 font-size: 20px;
                 font-weight: 400;
                 color:#000000;
+            }
+        }
+        select{
+            height: 100%;
+            max-height: 40px;
+            width: 100%;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 13px;
+            padding: 12px 15px;
+            background-color: #ffffff;
+            color: #000000;
+            &::placeholder {
+                font-family: 'Raleway', sans-serif;
+                font-size: 20px;
+                font-weight: 400;
+                color: #000000;
             }
         }
         button{
