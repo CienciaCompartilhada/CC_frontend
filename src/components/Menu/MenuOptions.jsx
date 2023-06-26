@@ -14,7 +14,7 @@ export default function HomeOptions(props){
                 pesquisas
             </OptionButton>
             <OptionButton chosen={props.chosen==='Minhas Preferências'} onClick={() => props.setChosen('Minhas Preferências')}>
-                Minhas Preferências
+                Atualizar Preferências
             </OptionButton>
         </OptionsDiv>
     );

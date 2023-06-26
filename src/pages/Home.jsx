@@ -4,6 +4,7 @@ import ResearchFeed from '../components/Home/ResearchFeed';
 import { useState } from 'react';
 import TeacherFeed from '../components/Home/TeacherFeed';
 import StudentFeed from '../components/Home/StudentFeed';
+import Preferences from '../components/Home/Preferences';
 
 export default function Home() {
     const [chosen, setChosen] = useState("pesquisas")
@@ -14,7 +15,7 @@ export default function Home() {
             {
                 chosen === 'pesquisas' ? <ResearchFeed/> : (
                     chosen === 'professores' ? <TeacherFeed/> : (
-                        chosen === 'alunos' ? <StudentFeed/> : <>MINHAS PREFERENCIAS</>
+                        chosen === 'alunos' ? <StudentFeed/> : <Preferences/>
                     )
                 )
             }
